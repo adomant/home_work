@@ -27,34 +27,25 @@ puts "hey its #{test.get_name} #{test.get_lastname}"
 test.short_name
 test.initials
 
-class Task2 < Human
-
-  def initialize(arr)
-    @arr = arr
+class Calculate < Human
+  def sum(array)
+    result = 0
+    array.each { |element| result += element }
   end
 
-  def get_arr
-    return @arr
-  end
+  def max(array)
+    result = 0
 
-  def arr_sum
-    arrsum=0
-    @arr.each {|i| arrsum+=i}
-    puts arrsum
-  end
-
-  def max_arr
-    m=0
-    @arr.each do |i|
-      if i>= m
-        m=i
+    array.each do |element|
+      if element >= result
+        result = element
       end
     end
-    puts m
+    result
   end
 end
 
-test2 = Task2.new([1,2,32,4])
-puts "yo arr is #{test2.get_arr}"
-test2.arr_sum
-test2.max_arr
+calculate_instance = Calculate.new('Mikhail', 'Matyukhin')
+test2 = [1,2,32,4]
+puts calculate_instance.sum(test2)
+puts calculate_instance.max(test2)
