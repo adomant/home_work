@@ -1,41 +1,44 @@
+require 'rspec/core'
+
 class Human
+  attr_reader :last_name
+  attr_accessor :first_name
+
   def initialize(first_name, last_name)
     @first_name = first_name
     @last_name = last_name
   end
 
-  def name
-    @first_name
-  end
-
-  def lastname
-    @last_name
-  end
-
   def short_name
-    puts "#{@first_name} #{@last_name}."
+    "#{first_name} #{last_name}."
   end
 
   def initials
-    puts "#{@first_name[0]}#{@last_name[0]}."
+    "#{first_name[0]}#{last_name[0]}."
   end
 end
 
-test = Human.new('Mikhail', 'Matyukhin')
-puts "hey its #{test.name} #{test.lastname}"
-test.short_name
-test.initials
+RSpec.describe Human do
+  let(:first_name) { 'Some thing' }
+  let(:last_name)  { 'Some thing' }
 
-class Calculate < Human
-  def sum(array)
+  let(:instance) { described_class.new(first_name, last_name) }
+
+  describe '#short_name' do
+    subject { instance.short_name }
+    it { expect(subject).to eq "#{first_name} #{last_name}." }
+  end
+end
+class ArrayExtend < Array
+  def sum
     result = 0
-    array.each { |element| result += element }
+    self.each { |element| result += element }
   end
 
-  def max(array)
+  def max
     result = 0
 
-    array.each do |element|
+    self.each do |element|
       if element >= result
         result = element
       end
@@ -44,7 +47,6 @@ class Calculate < Human
   end
 end
 
-calculate_instance = Calculate.new('Mikhail', 'Matyukhin')
-test2 = [1,2,32,4]
-puts calculate_instance.sum(test2)
-puts calculate_instance.max(test2)
+calculate_instance = ArrayExtend.new([1,2,32,4])
+puts calculate_instance.sum
+puts calculate_instance.max
