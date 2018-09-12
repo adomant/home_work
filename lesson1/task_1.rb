@@ -1,29 +1,28 @@
 class Human
-
-  def initialize(firstname, lastname)
-    @firstname = firstname
-    @lastname = lastname
+  def initialize(first_name, last_name)
+    @first_name = first_name
+    @last_name = last_name
   end
 
-  def get_name
-    return @firstname
+  def name
+    @first_name
   end
 
-  def get_lastname
-    return @lastname
+  def lastname
+    @last_name
   end
 
   def short_name
-    puts @firstname +' '+  @lastname[0] + "."
+    puts "#{@first_name} #{@last_name}."
   end
 
   def initials
-    puts @firstname[0] + @lastname[0]
+    puts "#{@first_name[0]}#{@last_name[0]}."
   end
 end
 
 test = Human.new('Mikhail', 'Matyukhin')
-puts "hey its #{test.get_name} #{test.get_lastname}"
+puts "hey its #{test.name} #{test.lastname}"
 test.short_name
 test.initials
 
