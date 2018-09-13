@@ -30,10 +30,10 @@ class ArrayExtend < Array
   end
 
   def max
-    result = 0
-    if self.all? { |element| element.is_a? Integer }
+    result = self[0]
+    if self.all? { |element| element.is_a? Integer}
       self.each do |element|
-        if element >= result
+        if element > result
           result = element
         end
       end
@@ -60,10 +60,12 @@ RSpec.describe ArrayExtend do
   let(:array1)   { [1,2,3,4] }
   let(:array2)   { [nil] }
   let(:array3)   { [1,2,'something'] }
+  let(:array4)   { [-1,-2,-500,4] }
 
   let(:instance1) { described_class.new(array1) }
   let(:instance2) { described_class.new(array2) }
   let(:instance3) { described_class.new(array3) }
+  let(:instance4) { described_class.new(array4) }
 
   describe '#sum' do
     subject { instance1.sum }
@@ -101,10 +103,10 @@ RSpec.describe ArrayExtend do
   end
 
   describe '#max3' do
-    subject {instance3.max}
+    subject {instance4.max}
     it "It showing max number in array" do
-      expect(subject).to eq "error, wrong array"
+      expect(subject).to eq (4)
     end
   end
-  
+
 end
