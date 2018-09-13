@@ -22,10 +22,10 @@ class ArrayExtend < Array
   def sum
     result = 0
     if self.all? { |element| element.is_a? Integer }
-    self.each { |element| result += element }
-    result
+      self.each { |element| result += element }
+      result
     else
-    "error, wrong array"
+      "error, wrong array"
     end
   end
 
@@ -39,7 +39,7 @@ class ArrayExtend < Array
       end
       result
     else
-    "error, wrong array"
+      "error, wrong array"
   end
   end
 end
@@ -57,7 +57,7 @@ RSpec.describe Human do
 end
 
 RSpec.describe ArrayExtend do
-  let(:array1)    { [1,2,3,4] }
+  let(:array1)   { [1,2,3,4] }
   let(:array2)   { [nil] }
   let(:array3)   { [1,2,'something'] }
 
