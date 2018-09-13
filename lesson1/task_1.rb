@@ -18,21 +18,11 @@ class Human
   end
 end
 
-RSpec.describe Human do
-  let(:first_name) { 'Some thing' }
-  let(:last_name)  { 'Some thing' }
-
-  let(:instance) { described_class.new(first_name, last_name) }
-
-  describe '#short_name' do
-    subject { instance.short_name }
-    it { expect(subject).to eq "#{first_name} #{last_name}." }
-  end
-end
 class ArrayExtend < Array
   def sum
     result = 0
     self.each { |element| result += element }
+    result
   end
 
   def max
@@ -47,6 +37,34 @@ class ArrayExtend < Array
   end
 end
 
-calculate_instance = ArrayExtend.new([1,2,32,4])
-puts calculate_instance.sum
-puts calculate_instance.max
+RSpec.describe Human do
+  let(:first_name) { 'Some thing' }
+  let(:last_name)  { 'Some thing' }
+
+  let(:instance) { described_class.new(first_name, last_name) }
+
+  describe '#short_name' do
+    subject { instance.short_name }
+    it { expect(subject).to eq "#{first_name} #{last_name}." }
+  end
+end
+
+RSpec.describe ArrayExtend do
+  let(:array)    { [1,2,3,4]}
+
+  let(:instance) { described_class.new(array) }
+
+  describe '#sum' do
+    subject { instance.sum }
+    it "It showing the sum of array" do
+      expect(subject).to eq(10)
+    end
+  end
+  
+  describe '#max' do
+    subject {instance.max}
+    it "It showing max number in array" do
+      expect(subject).to eq(4)
+    end
+  end
+end
