@@ -92,16 +92,19 @@ RSpec.describe ArrayExtend do
       expect(subject).to eq(4)
     end
   end
+
   describe '#max2' do
     subject {instance2.max}
     it "It showing max number in array" do
       expect(subject).to eq "error, wrong array"
     end
   end
+
   describe '#max3' do
     subject {instance3.max}
     it "It showing max number in array" do
       expect(subject).to eq "error, wrong array"
     end
   end
+  
 end
