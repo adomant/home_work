@@ -21,19 +21,26 @@ end
 class ArrayExtend < Array
   def sum
     result = 0
+    if self.all? { |element| element.is_a? Integer }
     self.each { |element| result += element }
     result
+    else
+    "error, wrong array"
+    end
   end
 
   def max
     result = 0
-
-    self.each do |element|
-      if element >= result
-        result = element
+    if self.all? { |element| element.is_a? Integer }
+      self.each do |element|
+        if element >= result
+          result = element
+        end
       end
-    end
-    result
+      result
+    else
+    "error, wrong array"
+  end
   end
 end
 
@@ -50,21 +57,51 @@ RSpec.describe Human do
 end
 
 RSpec.describe ArrayExtend do
-  let(:array)    { [1,2,3,4]}
+  let(:array1)    { [1,2,3,4] }
+  let(:array2)   { [nil] }
+  let(:array3)   { [1,2,'something'] }
 
-  let(:instance) { described_class.new(array) }
+  let(:instance1) { described_class.new(array1) }
+  let(:instance2) { described_class.new(array2) }
+  let(:instance3) { described_class.new(array3) }
 
   describe '#sum' do
-    subject { instance.sum }
+    subject { instance1.sum }
     it "It showing the sum of array" do
       expect(subject).to eq(10)
     end
   end
-  
-  describe '#max' do
-    subject {instance.max}
+
+  describe '#sum' do
+    subject { instance2.sum }
+    it "It showing the sum of array2" do
+      expect(subject).to eq "error, wrong array"
+    end
+  end
+
+  describe '#sum' do
+    subject { instance3.sum }
+    it "It showing the sum of array3" do
+      expect(subject).to eq("error, wrong array")
+    end
+  end
+
+  describe '#max1' do
+    subject {instance1.max}
     it "It showing max number in array" do
       expect(subject).to eq(4)
+    end
+  end
+  describe '#max2' do
+    subject {instance2.max}
+    it "It showing max number in array" do
+      expect(subject).to eq "error, wrong array"
+    end
+  end
+  describe '#max3' do
+    subject {instance3.max}
+    it "It showing max number in array" do
+      expect(subject).to eq "error, wrong array"
     end
   end
 end
