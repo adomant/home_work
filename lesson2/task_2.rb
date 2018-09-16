@@ -52,13 +52,13 @@ instance.xls_save
 
 RSpec.describe FileCreater do
 
-  let(:h) { {
+  let(:t) { {
     headers: ['First Name', 'Last Name', 'Age'],
     body: { '0' => ['Dima', 'Strukov', 22], '1' => ['Mikhail', 'Matyukhin', 22]
     }
   } }
 
-  let(:instance1) { described_class.new(h) }
+  let(:instance1) { described_class.new(t) }
 
   describe 'headers_creation' do
     subject { instance1.headers_creation}
