@@ -1,5 +1,4 @@
 require 'csv'
-require 'json'
 require 'pry'
 require 'rspec/core'
 
@@ -20,9 +19,9 @@ class FileCreater
   def csv_creation
     @s = CSV.generate do |csv|
       csv << @headers
-    @body.values.each do |x|
-      csv << x
-    end
+      @body.values.each do |x|
+        csv << x
+      end
     end
   end
 
