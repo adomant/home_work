@@ -57,56 +57,58 @@ RSpec.describe Human do
 end
 
 RSpec.describe ArrayExtend do
-  let(:array1)   { [1,2,3,4] }
-  let(:array2)   { [nil] }
-  let(:array3)   { [1,2,'something'] }
-  let(:array4)   { [-1,-2,-500,4] }
-
-  let(:instance1) { described_class.new(array1) }
-  let(:instance2) { described_class.new(array2) }
-  let(:instance3) { described_class.new(array3) }
-  let(:instance4) { described_class.new(array4) }
 
   describe '#sum' do
-    subject { instance1.sum }
-    it "It showing the sum of array" do
-      expect(subject).to eq(10)
+    let(:instance) { described_class.new(array) }
+    subject { instance.sum }
+
+    context 'when array is [1,2,3,4]' do
+      let(:array)    { [1,2,3,4] }
+
+      it "It showing the sum of array" do
+        expect(subject).to eq(10)
+      end
+    end
+    context 'when array is [nil]' do
+      let(:array)   { [nil] }
+
+      it "It showing the sum of array" do
+        expect(subject).to eq "error, wrong array"
+      end
+    end
+    context 'when array is [1,2,something]' do
+      let(:array)   { [1,2,'something'] }
+
+      it "It showing the sum of array" do
+        expect(subject).to eq "error, wrong array"
+      end
     end
   end
 
-  describe '#sum' do
-    subject { instance2.sum }
-    it "It showing the sum of array2" do
-      expect(subject).to eq "error, wrong array"
+  describe '#max' do
+    subject {instance.max}
+    let(:instance) { described_class.new(array) }
+
+    context 'when array is [1,2,3,4]' do
+      let(:array)    { [1,2,3,4] }
+
+      it "It showing max number in array" do
+        expect(subject).to eq(4)
+      end
+    end
+    context 'when array is [1,2,something]' do
+      let(:array)    { [1,-2,'something'] }
+
+      it "It showing max number in array" do
+        expect(subject).to eq "error, wrong array"
+      end
+    end
+    context 'when array is [-1,-2,-500,4]' do
+      let(:array)    { [-1,-2,-500,4] }
+
+      it "It showing max number in array" do
+        expect(subject).to eq(4)
+      end
     end
   end
-
-  describe '#sum' do
-    subject { instance3.sum }
-    it "It showing the sum of array3" do
-      expect(subject).to eq("error, wrong array")
-    end
-  end
-
-  describe '#max1' do
-    subject {instance1.max}
-    it "It showing max number in array" do
-      expect(subject).to eq(4)
-    end
-  end
-
-  describe '#max2' do
-    subject {instance2.max}
-    it "It showing max number in array" do
-      expect(subject).to eq "error, wrong array"
-    end
-  end
-
-  describe '#max3' do
-    subject {instance4.max}
-    it "It showing max number in array" do
-      expect(subject).to eq (4)
-    end
-  end
-
 end
