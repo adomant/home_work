@@ -45,14 +45,17 @@ class ArrayExtend < Array
 end
 
 RSpec.describe Human do
-  let(:first_name) { 'Some thing' }
-  let(:last_name)  { 'Some thing' }
-
-  let(:instance) { described_class.new(first_name, last_name) }
 
   describe '#short_name' do
+    let(:first_name) { 'Some thing' }
+    let(:last_name)  { 'Some thing' }
+    let(:instance) { described_class.new(first_name, last_name) }
+
     subject { instance.short_name }
-    it { expect(subject).to eq "#{first_name} #{last_name}." }
+
+    context 'when first name and username provided' do
+        it { expect(subject).to eq "#{first_name} #{last_name}." }
+    end
   end
 end
 
