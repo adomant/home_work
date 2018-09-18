@@ -3,19 +3,18 @@ require 'pry'
 require 'rspec/core'
 
 
-class FileCreater
+class BaseGenerator
   def initialize(hash)
     @hash = hash
   end
-
   def headers_creation
     @headers = @hash[:headers]
   end
-
   def body_creation
     @body = @hash[:body]
   end
-
+end
+class CsvGenerator < BaseGenerator
   def csv_creation
     @s = CSV.generate do |csv|
       csv << @headers
@@ -24,32 +23,36 @@ class FileCreater
       end
     end
   end
-
   def csv_save
     File.write('the_file.csv', @s)
   end
-
+end
+class XlsGenerator < BaseGenerator
+  def xls_creation
+    @s = CSV.generate do |csv|
+      csv << @headers
+      @body.values.each do |x|
+        csv << x
+      end
+    end
+  end
   def xls_save
     File.write('the_file.xls', @s)
   end
-
 end
-
 h = {
   headers: ['First Name', 'Last Name', 'Age'],
   body: { '0' => ['Dima', 'Strukov', 22], '1' => ['Mikhail', 'Matyukhin', 22]
   }
 }
-
-instance = FileCreater.new (h)
+instance = XlsGenerator.new (h)
 instance.headers_creation
 instance.body_creation
-instance.csv_creation
-instance.csv_save
+instance.xls_creation
 instance.xls_save
 
 
-RSpec.describe FileCreater do
+RSpec.describe BaseGenerator do
 
   let(:t) { {
     headers: ['First Name', 'Last Name', 'Age'],
