@@ -2,55 +2,57 @@ require 'csv'
 require 'pry'
 require 'rspec/core'
 
-
 class BaseGenerator
-  def initialize(hash)
+  attr_reader :headers, :body
+
+  def initialize(hash, generator_klass)
     @hash = hash
-  end
-  def headers_creation
+
     @headers = @hash[:headers]
-  end
-  def body_creation
     @body = @hash[:body]
+
+    @instance = generator_klass.new
+  end
+
+  def generate
+    @instance.generate(headers, body)
   end
 end
-class CsvGenerator < BaseGenerator
-  def csv_creation
-    @s = CSV.generate do |csv|
-      csv << @headers
-      @body.values.each do |x|
-        csv << x
+
+class CsvGenerator
+  def generate(headers, body)
+    result = CSV.generate do |csv|
+      csv << headers
+      body.values.each do |value|
+        csv << value
       end
     end
-  end
-  def csv_save
-    File.write('the_file.csv', @s)
+
+    File.write('the_file.csv', result)
   end
 end
-class XlsGenerator < BaseGenerator
-  def xls_creation
-    @s = CSV.generate do |csv|
-      csv << @headers
-      @body.values.each do |x|
-        csv << x
+
+class XlsGenerator
+  def generate(headers, body)
+    result = CSV.generate do |xls|
+      xls << headers
+      body.values.each do |value|
+        xls << value
       end
     end
-  end
-  def xls_save
-    File.write('the_file.xls', @s)
+
+    File.write('the_file.xls', result)
   end
 end
+
 h = {
   headers: ['First Name', 'Last Name', 'Age'],
   body: { '0' => ['Dima', 'Strukov', 22], '1' => ['Mikhail', 'Matyukhin', 22]
   }
 }
-instance = XlsGenerator.new (h)
-instance.headers_creation
-instance.body_creation
-instance.xls_creation
-instance.xls_save
 
+instance = BaseGenerator.new(h, CsvGenerator)
+instance.generate
 
 RSpec.describe BaseGenerator do
 
