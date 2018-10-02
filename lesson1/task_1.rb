@@ -25,7 +25,7 @@ class ArrayExtend < Array
       self.each { |element| result += element }
       result
     else
-      "error, wrong array"
+      raise ArgumentError, "error, wrong array"
     end
   end
 
@@ -39,8 +39,8 @@ class ArrayExtend < Array
       end
       result
     else
-      "error, wrong array"
-  end
+      raise ArgumentError, "error, wrong array"
+    end
   end
 end
 
@@ -68,22 +68,22 @@ RSpec.describe ArrayExtend do
     context 'when array is [1,2,3,4]' do
       let(:array)    { [1,2,3,4] }
 
-      it "It showing the sum of array" do
+      it "showing the sum of array" do
         expect(subject).to eq(10)
       end
     end
     context 'when array is [nil]' do
       let(:array)   { [nil] }
 
-      it "It showing the sum of array" do
-        expect(subject).to eq "error, wrong array"
+      it "showing the sum of array" do
+        expect{subject}.to raise_error(ArgumentError,"error, wrong array")
       end
     end
     context 'when array is [1,2,something]' do
       let(:array)   { [1,2,'something'] }
 
-      it "It showing the sum of array" do
-        expect(subject).to eq "error, wrong array"
+      it "showing the sum of array" do
+        expect{subject}.to raise_error(ArgumentError,"error, wrong array")
       end
     end
   end
@@ -95,21 +95,21 @@ RSpec.describe ArrayExtend do
     context 'when array is [1,2,3,4]' do
       let(:array)    { [1,2,3,4] }
 
-      it "It showing max number in array" do
+      it "showing max number in array" do
         expect(subject).to eq(4)
       end
     end
     context 'when array is [1,2,something]' do
       let(:array)    { [1,-2,'something'] }
 
-      it "It showing max number in array" do
-        expect(subject).to eq "error, wrong array"
+      it "showing max number in array" do
+        expect{subject}.to raise_error(ArgumentError,"error, wrong array")
       end
     end
     context 'when array is [-1,-2,-500,4]' do
       let(:array)    { [-1,-2,-500,4] }
 
-      it "It showing max number in array" do
+      it "showing max number in array" do
         expect(subject).to eq(4)
       end
     end

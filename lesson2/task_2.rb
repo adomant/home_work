@@ -2,37 +2,47 @@ require 'csv'
 require 'pry'
 require 'rspec/core'
 
+class BaseGenerator
+  attr_reader :headers, :body
 
-class FileCreater
-  def initialize(hash)
+  def initialize(hash, generator_klass)
     @hash = hash
-  end
 
-  def headers_creation
     @headers = @hash[:headers]
-  end
-
-  def body_creation
     @body = @hash[:body]
+
+    @instance = generator_klass.new
   end
 
-  def csv_creation
-    @s = CSV.generate do |csv|
-      csv << @headers
-      @body.values.each do |x|
-        csv << x
+  def generate
+    @instance.generate(headers, body)
+  end
+end
+
+class CsvGenerator
+  def generate(headers, body)
+    result = CSV.generate do |csv|
+      csv << headers
+      body.values.each do |value|
+        csv << value
       end
     end
-  end
 
-  def csv_save
-    File.write('the_file.csv', @s)
+    File.write('the_file.csv', result)
   end
+end
 
-  def xls_save
-    File.write('the_file.xls', @s)
+class XlsGenerator
+  def generate(headers, body)
+    result = CSV.generate do |xls|
+      xls << headers
+      body.values.each do |value|
+        xls << value
+      end
+    end
+
+    File.write('the_file.xls', result)
   end
-
 end
 
 h = {
@@ -41,15 +51,10 @@ h = {
   }
 }
 
-instance = FileCreater.new (h)
-instance.headers_creation
-instance.body_creation
-instance.csv_creation
-instance.csv_save
-instance.xls_save
+instance = BaseGenerator.new(h, CsvGenerator)
+instance.generate
 
-
-RSpec.describe FileCreater do
+RSpec.describe BaseGenerator do
 
   let(:t) { {
     headers: ['First Name', 'Last Name', 'Age'],
