@@ -49,7 +49,7 @@ RSpec.describe Human do
   describe '#short_name' do
     let(:first_name) { 'Some thing' }
     let(:last_name)  { 'Some thing' }
-    let(:instance) { described_class.new(first_name, last_name) }
+    let(:instance)   { described_class.new(first_name, last_name) }
 
     subject { instance.short_name }
 
@@ -72,6 +72,7 @@ RSpec.describe ArrayExtend do
         expect(subject).to eq(10)
       end
     end
+
     context 'when array is [nil]' do
       let(:array)   { [nil] }
 
@@ -79,6 +80,7 @@ RSpec.describe ArrayExtend do
         expect{subject}.to raise_error(ArgumentError,"error, wrong array")
       end
     end
+
     context 'when array is [1,2,something]' do
       let(:array)   { [1,2,'something'] }
 
@@ -99,6 +101,7 @@ RSpec.describe ArrayExtend do
         expect(subject).to eq(4)
       end
     end
+
     context 'when array is [1,2,something]' do
       let(:array)    { [1,-2,'something'] }
 
@@ -106,6 +109,7 @@ RSpec.describe ArrayExtend do
         expect{subject}.to raise_error(ArgumentError,"error, wrong array")
       end
     end
+
     context 'when array is [-1,-2,-500,4]' do
       let(:array)    { [-1,-2,-500,4] }
 
